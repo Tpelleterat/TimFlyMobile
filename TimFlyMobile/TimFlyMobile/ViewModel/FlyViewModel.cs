@@ -2,6 +2,7 @@ using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using TimFlyMobile.Managers;
+using Xamarin.Forms;
 
 namespace TimFlyMobile.ViewModel
 {
@@ -97,14 +98,60 @@ namespace TimFlyMobile.ViewModel
 
         #region Commands
 
+        /// <summary>
+        /// Get roll pitch command
+        /// </summary>
+        public RelayCommand<Point> ElevationYawJoyCommand
+        {
+            get
+            {
+                if (_elevationYawCommand == null)
+                    _elevationYawCommand = new RelayCommand<Point>(point => ElevationYawJoy(point));
+
+                return _elevationYawCommand;
+            }
+        }
+        private RelayCommand<Point> _elevationYawCommand;
+
+        /// <summary>
+        /// Get roll pitch command
+        /// </summary>
+        public RelayCommand<Point> RollPitchJoyCommand
+        {
+            get
+            {
+                if (_rollPitchJoyCommand == null)
+                    _rollPitchJoyCommand = new RelayCommand<Point>(point => RollPitchJoy(point));
+
+                return _rollPitchJoyCommand;
+            }
+        }
+        private RelayCommand<Point> _rollPitchJoyCommand;
+
         #endregion
 
+        /// <summary>
+        /// Initialise new instance
+        /// </summary>
+        /// <param name="globalManager">Global manager</param>
         public FlyViewModel(IGlobalManager globalManager)
         {
             _globalManager = globalManager;
         }
 
         #region Methods
+
+
+        private void RollPitchJoy(Point point)
+        {
+            var roll = point.X;
+            var pitch = point.Y;
+        }
+
+        private void ElevationYawJoy(Point point)
+        {
+            var elevation = point.Y;
+        }
 
         #endregion
     }

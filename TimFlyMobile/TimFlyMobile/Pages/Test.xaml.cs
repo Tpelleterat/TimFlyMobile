@@ -23,8 +23,8 @@ namespace TimFlyMobile.Pages
         {
             base.OnAppearing();
 
-            TouchView.JoyView = JoyView;
-            TouchView2.JoyView = JoyView2;
+            TouchView.JoyContainer = JoyView;
+            TouchView2.JoyContainer = JoyView2;
         }
     }
 }

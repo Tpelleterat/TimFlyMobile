@@ -18,37 +18,44 @@
 
         <AbsoluteLayout VerticalOptions="End"
                         Grid.Row="1"
+                        WidthRequest="150"
+                        HeightRequest="150"
                         Margin="10,0,0,10">
 
+            <View x:Name="JoyView"
+                  WidthRequest="150"
+                  HeightRequest="150"
+                  BackgroundColor="Black" />
+
             <local:CustomControlTest x:Name="TouchView"
-                                     WidthRequest="150"
-                                     HeightRequest="150"
+                                     WidthRequest="40"
+                                     HeightRequest="40"
                                      BackgroundColor="Blue"
                                      MaxX="50"
+                                     MaxY="50"
                                      Test1="{Binding ConnectCommand}" />
 
-            <View x:Name="JoyView"
-                  WidthRequest="40"
-                  HeightRequest="40"
-                  BackgroundColor="Black" />
         </AbsoluteLayout>
 
-        <AbsoluteLayout Grid.Column="1"
-                        Grid.Row="1"
-                        VerticalOptions="End"
+        <AbsoluteLayout VerticalOptions="End"
                         HorizontalOptions="End"
-                        Margin="0,0,10,10">
-
-            <local:CustomControlTest x:Name="TouchView2"
-                                     WidthRequest="150"
-                                     HeightRequest="150"
-                                     BackgroundColor="Red" />
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        WidthRequest="150"
+                        HeightRequest="150"
+                        Margin="10,0,0,10">
 
             <View x:Name="JoyView2"
-                  WidthRequest="40"
-                  HeightRequest="40"
+                  WidthRequest="150"
+                  HeightRequest="150"
                   BackgroundColor="Black" />
 
+            <local:CustomControlTest x:Name="TouchView2"
+                                     WidthRequest="40"
+                                     HeightRequest="40"
+                                     BackgroundColor="Blue"
+                                     MaxX="50"
+                                     MaxY="50" />
         </AbsoluteLayout>
 
     </Grid>

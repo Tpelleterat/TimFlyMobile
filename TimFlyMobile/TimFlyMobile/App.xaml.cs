@@ -22,7 +22,7 @@ namespace TimFlyMobile
         public App()
         {
             //MainPage = new Connexion();
-            MainPage = new Test();
+            MainPage = new Fly();
         }
 
         protected override void OnStart()

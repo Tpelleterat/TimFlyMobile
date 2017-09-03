@@ -10,7 +10,8 @@ namespace TimFlyMobile.Constrols
 {
     public class CustomControlTest : View
     {
-        public View JoyView;
+        //public View JoyView;
+        public View JoyContainer;
 
         #region Attributes
 
@@ -120,11 +121,11 @@ namespace TimFlyMobile.Constrols
 
         private bool IsJoyInside(float x, float y)
         {
-            bool xInside = JoyView.TranslationX <= x - 40 && JoyView.TranslationX + JoyView.Width >= x - 40;
+            bool xInside = TranslationX <= x && TranslationX + Width >= x;
 
-            bool yInside = JoyView.TranslationY <= y - 40 && JoyView.TranslationY + JoyView.Height >= y - 40;
+            bool yInside = TranslationY <= y && TranslationY + Height >= y;
 
-            //return xInside && yInside;
+           //return xInside && yInside;
             return true;
         }
 
@@ -133,16 +134,16 @@ namespace TimFlyMobile.Constrols
             double workX = _initialJoyPositionX + (x - _initialTouchX) * 0.35;
             if (workX < 0)
                 workX = 0;
-            else if (workX > Width - JoyView.Width)
-                workX = Width - JoyView.Width;
-            JoyView.TranslationX = workX;
+            else if (workX > JoyContainer.Width - Width)
+                workX = JoyContainer.Width - Width;
+            TranslationX = workX;
 
             double workY = _initialJoyPositionY + (y - _InitialTouchY) * 0.35;
             if (workY < 0)
                 workY = 0;
-            else if (workY > Height - JoyView.Height)
-                workY = Height - JoyView.Height;
-            JoyView.TranslationY = workY;
+            else if (workY > JoyContainer.Height - Height)
+                workY = JoyContainer.Height - Height;
+            TranslationY = workY;
 
             if (Test1 != null)
                 Test1.Execute(new Point(XPosition, YPosition));
@@ -150,30 +151,30 @@ namespace TimFlyMobile.Constrols
 
         private void FillPositions()
         {
-            double logicPositionXMax = Width - _initialJoyPositionX - JoyView.Width;
+            double logicPositionXMax = JoyContainer.Width - _initialJoyPositionX - Width;
 
-            if (JoyView.TranslationX - _initialJoyPositionX > 0)
+            if (TranslationX - _initialJoyPositionX > 0)
             {
-                _xPosition = MaxX / (logicPositionXMax / (JoyView.TranslationX - _initialJoyPositionX));
+                _xPosition = MaxX / (logicPositionXMax / (TranslationX - _initialJoyPositionX));
             }
-            else if (JoyView.TranslationX - _initialJoyPositionX < 0)
+            else if (TranslationX - _initialJoyPositionX < 0)
             {
-                _xPosition = -MaxX / (logicPositionXMax / (JoyView.TranslationX - _initialJoyPositionX));
+                _xPosition = -MaxX / (logicPositionXMax / (TranslationX - _initialJoyPositionX));
             }
             else
             {
                 _xPosition = 0;
             }
 
-            double logicPositionYMax = Height - _initialJoyPositionY - JoyView.Height;
+            double logicPositionYMax = JoyContainer.Height - _initialJoyPositionY - Height;
 
-            if (JoyView.TranslationY - _initialJoyPositionY > 0)
+            if (TranslationY - _initialJoyPositionY > 0)
             {
-                _yPosition = MaxY / (logicPositionYMax / (JoyView.TranslationY - _initialJoyPositionY));
+                _yPosition = MaxY / (logicPositionYMax / (TranslationY - _initialJoyPositionY));
             }
-            else if (JoyView.TranslationY - _initialJoyPositionY < 0)
+            else if (TranslationY - _initialJoyPositionY < 0)
             {
-                _yPosition = -MaxY / (logicPositionYMax / (JoyView.TranslationY - _initialJoyPositionY));
+                _yPosition = -MaxY / (logicPositionYMax / (TranslationY - _initialJoyPositionY));
             }
             else
             {
@@ -183,11 +184,11 @@ namespace TimFlyMobile.Constrols
 
         private void CenterJoy()
         {
-            JoyView.TranslationX = (WidthRequest / 2) - (JoyView.WidthRequest / 2);
-            JoyView.TranslationY = (HeightRequest / 2) - (JoyView.HeightRequest / 2);
+            TranslationX = (JoyContainer.WidthRequest / 2) - (WidthRequest / 2);
+            TranslationY = (JoyContainer.HeightRequest / 2) - (HeightRequest / 2);
 
-            _initialJoyPositionX = JoyView.TranslationX;
-            _initialJoyPositionY = JoyView.TranslationY;
+            _initialJoyPositionX = TranslationX;
+            _initialJoyPositionY = TranslationY;
 
             if (Test1 != null)
                 Test1.Execute(null);
