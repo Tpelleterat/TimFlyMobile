@@ -1,0 +1,44 @@
+﻿<AbsoluteLayout VerticalOptions="End" Margin="10,0,0,10">
+            <View WidthRequest="150"
+                  HeightRequest="150"
+                  BackgroundColor="Black"
+                  Opacity="0.3" />
+
+            <local:PanView x:Name="JoyPan"
+                           WidthRequest="40"
+                           HeightRequest="40"
+                           ParentWidth="150"
+                           ParentHeight="150" />
+
+            <View x:Name="JoyView"
+                  WidthRequest="40"
+                  HeightRequest="40"
+                  BackgroundColor="Black" />
+
+        </AbsoluteLayout>
+
+        <AbsoluteLayout Grid.Column="1"
+                        VerticalOptions="End"
+                        HorizontalOptions="End"
+                        Margin="0,0,10,10">
+            <View WidthRequest="150"
+                  HeightRequest="150"
+                  BackgroundColor="Black"
+                  Opacity="0.3" />
+
+            <local:PanView x:Name="JoyPan2"
+                           WidthRequest="40"
+                           HeightRequest="40"
+                           ParentWidth="150"
+                           ParentHeight="150" />
+
+            <View x:Name="JoyView2"
+                  WidthRequest="40"
+                  HeightRequest="40"
+                  BackgroundColor="Black" />
+
+        </AbsoluteLayout>
+
+
+		    JoyPan.JoyView = JoyView;
+            JoyPan2.JoyView = JoyView2;

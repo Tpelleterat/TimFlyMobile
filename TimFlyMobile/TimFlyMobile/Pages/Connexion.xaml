@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TimFlyMobile.Pages.Connexion">
+
+    <StackLayout VerticalOptions="Center"
+                 HorizontalOptions="Center">
+
+        <Grid Margin="10,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label VerticalTextAlignment="Center"
+                   Grid.Column="0"
+                   Text="Adresse :" />
+
+            <Editor Grid.Column="1"
+                    IsEnabled="{Binding ReversConnectionPending, }"
+                    Text="{Binding Address, Mode=TwoWay}" />
+        </Grid>
+
+        <Grid Margin="10,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label VerticalTextAlignment="Center"
+                   Grid.Column="0"
+                   Text="Port :"/>
+
+            <Editor Grid.Column="1"
+                    IsEnabled="{Binding ReversConnectionPending}"
+                    Text="{Binding Port, Mode=TwoWay}" />
+        </Grid>
+
+        <Grid>
+            <Grid.GestureRecognizers>
+                
+            </Grid.GestureRecognizers>
+        </Grid>
+
+        <Button Text="Connexion"
+                Margin="10,0,10,0"
+                Command="{Binding ConnectCommand}"
+                IsEnabled="{Binding ReversConnectionPending}"/>
+
+        <Label Text="Connexion en cours..."
+               Margin="10,10,10,0"
+               IsVisible="{Binding ConnectionPending}"/>
+    </StackLayout>
+
+</ContentPage>
