@@ -141,7 +141,6 @@ namespace TimFlyMobile.ViewModel
 
         #region Methods
 
-
         private void RollPitchJoy(Point point)
         {
             var roll = point.X;

@@ -43,7 +43,7 @@
                         Grid.Column="1"
                         WidthRequest="150"
                         HeightRequest="150"
-                        Margin="10,0,0,10">
+                        Margin="0,0,10,10">
 
             <View x:Name="JoyView2"
                   WidthRequest="150"
