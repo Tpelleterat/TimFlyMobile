@@ -125,7 +125,7 @@ namespace TimFlyMobile.Constrols
 
             bool yInside = TranslationY <= y && TranslationY + Height >= y;
 
-           //return xInside && yInside;
+            //return xInside && yInside;
             return true;
         }
 
@@ -155,7 +155,7 @@ namespace TimFlyMobile.Constrols
 
             if (TranslationX - _initialJoyPositionX > 0)
             {
-                _xPosition = MaxX / (logicPositionXMax / (TranslationX - _initialJoyPositionX));
+                _xPosition = -MaxX / (logicPositionXMax / (TranslationX - _initialJoyPositionX));
             }
             else if (TranslationX - _initialJoyPositionX < 0)
             {
@@ -170,7 +170,7 @@ namespace TimFlyMobile.Constrols
 
             if (TranslationY - _initialJoyPositionY > 0)
             {
-                _yPosition = MaxY / (logicPositionYMax / (TranslationY - _initialJoyPositionY));
+                _yPosition = -MaxY / (logicPositionYMax / (TranslationY - _initialJoyPositionY));
             }
             else if (TranslationY - _initialJoyPositionY < 0)
             {

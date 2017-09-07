@@ -143,13 +143,13 @@ namespace TimFlyMobile.ViewModel
 
         private void RollPitchJoy(Point point)
         {
-            var roll = point.X;
-            var pitch = point.Y;
+            RollValue = Convert.ToInt32(point.X);
+            PitchValue = Convert.ToInt32(point.Y);
         }
 
         private void ElevationYawJoy(Point point)
         {
-            var elevation = point.Y;
+            ElevationValue = Convert.ToInt32(point.Y);
         }
 
         #endregion
