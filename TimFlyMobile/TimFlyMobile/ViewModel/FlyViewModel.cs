@@ -145,11 +145,15 @@ namespace TimFlyMobile.ViewModel
         {
             RollValue = Convert.ToInt32(point.X);
             PitchValue = Convert.ToInt32(point.Y);
+
         }
 
         private void ElevationYawJoy(Point point)
         {
             ElevationValue = Convert.ToInt32(point.Y);
+
+            if (ElevationValue == 5)
+                _globalManager.ChangeElevation((int)ElevationValue);
         }
 
         #endregion

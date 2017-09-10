@@ -30,16 +30,25 @@ namespace TimFlyMobile.Managers
         public async Task<bool> Connect(string address, int port)
         {
 #warning debug, code à réactiver
-            //bool success = await _socketService.Connect(address, port);
+            bool success = await _socketService.Connect(address, port);
 
-            //if (success)
-            //{
-            //    await _socketService.SendMessage(Constants.STATUS_COMMAND);
-            //}
-            //return success;
+            if (success)
+            {
+                await _socketService.SendMessage(Constants.STATUS_COMMAND);
+            }
+            return success;
 
-            await Task.Delay(3000);
-            return false;
+            //await Task.Delay(3000);
+            //return false;
+        }
+
+        /// <summary>
+        /// Send socket message with
+        /// </summary>
+        /// <param name="value">New elevation value</param>
+        public void ChangeElevation(int value)
+        {
+            _socketService.SendMessage(string.Concat(Constants.ELEVATION_COMMAND, Constants.COMMAND_SEPARATOR, value));
         }
 
         #endregion

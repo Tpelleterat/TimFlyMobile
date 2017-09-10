@@ -10,10 +10,13 @@ namespace TimFlyMobile
     {
         //Connection page default values
         public static string DEFAULT_ADDRESS = "192.168.0.";
-        public static string DEFAULT_PORT = "1331";
+        public static string DEFAULT_PORT = "1337";
 
         //Sockets commands
+        public static string COMMAND_SEPARATOR = "|";
         public static string STATUS_COMMAND = "STATUS";
+        public static string ELEVATION_COMMAND = "ELEVATION";
+
 
     }
 }

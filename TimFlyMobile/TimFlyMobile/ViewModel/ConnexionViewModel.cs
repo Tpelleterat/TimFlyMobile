@@ -2,6 +2,7 @@ using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using TimFlyMobile.Managers;
+using Xamarin.Forms;
 
 namespace TimFlyMobile.ViewModel
 {
@@ -128,9 +129,12 @@ namespace TimFlyMobile.ViewModel
 #warning int parse exception
             bool success = await _globalManager.Connect(Address, int.Parse(Port));
 
-            if (!success)
+            if (success)
             {
                 ConnectionPending = false;
+                Device.BeginInvokeOnMainThread(() => {
+                    App.Current.MainPage = new Pages.Fly();
+                });
             }
         }
 

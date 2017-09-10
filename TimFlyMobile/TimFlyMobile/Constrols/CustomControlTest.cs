@@ -10,9 +10,6 @@ namespace TimFlyMobile.Constrols
 {
     public class CustomControlTest : View
     {
-        //public View JoyView;
-        public View JoyContainer;
-
         #region Attributes
 
         private bool _moveOn;
@@ -26,6 +23,22 @@ namespace TimFlyMobile.Constrols
         #endregion
 
         #region Properties
+
+        private View _joyContainer;
+
+        public View JoyContainer
+        {
+            get
+            {
+                return _joyContainer;
+            }
+            set
+            {
+                _joyContainer = value;
+                CenterJoy();
+            }
+        }
+
 
         public ICommand Test1
         {
@@ -89,12 +102,18 @@ namespace TimFlyMobile.Constrols
 
         #region Methods
 
-        protected override void OnSizeAllocated(double width, double height)
-        {
-            base.OnSizeAllocated(width, height);
+        //protected override void OnSizeAllocated(double width, double height)
+        //{
+        //    base.OnSizeAllocated(width, height);
 
-            CenterJoy();
-        }
+        //}
+
+        //protected override void OnParentSet()
+        //{
+        //    base.OnParentSet();
+
+        //    CenterJoy();
+        //}
 
         public void OnTouchEvent(TouchStatus touchStatus, int touchId, float x, float y)
         {
@@ -184,14 +203,17 @@ namespace TimFlyMobile.Constrols
 
         private void CenterJoy()
         {
-            TranslationX = (JoyContainer.WidthRequest / 2) - (WidthRequest / 2);
-            TranslationY = (JoyContainer.HeightRequest / 2) - (HeightRequest / 2);
+            if (JoyContainer != null)
+            {
+                TranslationX = (JoyContainer.WidthRequest / 2) - (WidthRequest / 2);
+                TranslationY = (JoyContainer.HeightRequest / 2) - (HeightRequest / 2);
 
-            _initialJoyPositionX = TranslationX;
-            _initialJoyPositionY = TranslationY;
+                _initialJoyPositionX = TranslationX;
+                _initialJoyPositionY = TranslationY;
 
-            if (Test1 != null)
-                Test1.Execute(null);
+                if (Test1 != null)
+                    Test1.Execute(null);
+            }
         }
 
         #endregion

@@ -26,7 +26,7 @@ namespace MobilePrototype.Services
                 _writer = new StreamWriter(_client.WriteStream);
 
                 Task taskReceive = Task.Run(() => { WaitForData(_client.ReadStream); });
-                await taskReceive.ConfigureAwait(false);
+                //await taskReceive.ConfigureAwait(false);
 
                 success = true;
             }

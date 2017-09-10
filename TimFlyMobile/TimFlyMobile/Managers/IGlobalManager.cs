@@ -6,5 +6,7 @@ namespace TimFlyMobile.Managers
     {
 
         Task<bool> Connect(string address, int port);
+
+        void ChangeElevation(int value);
     }
 }
