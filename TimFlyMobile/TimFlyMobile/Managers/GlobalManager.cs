@@ -17,6 +17,13 @@ namespace TimFlyMobile.Managers
         XamarinSocketService _socketService;
         BrainStatusEnum _brainStatusEnum;
 
+        private int _elevation;
+        private bool _newElevation;
+        private int _pich;
+        private bool _newPich;
+        private int _roll;
+        private bool _newRoll;
+
         #endregion
 
         public GlobalManager()
@@ -35,6 +42,9 @@ namespace TimFlyMobile.Managers
             if (success)
             {
                 await _socketService.SendMessage(Constants.STATUS_COMMAND);
+
+#warning Voir meilleurs solution
+                StartSocketLoop();
             }
             return success;
 
@@ -48,7 +58,74 @@ namespace TimFlyMobile.Managers
         /// <param name="value">New elevation value</param>
         public void ChangeElevation(int value)
         {
-            _socketService.SendMessage(string.Concat(Constants.ELEVATION_COMMAND, Constants.COMMAND_SEPARATOR, value));
+            if (value != _elevation)
+            {
+                _elevation = value;
+                _newElevation = true;
+            }
+        }
+
+        public void ChangePich(int value)
+        {
+            if (value != _pich)
+            {
+                _pich = value;
+                _newPich = true;
+            }
+        }
+
+        public void ChangeRoll(int value)
+        {
+            if (value != _roll)
+            {
+                _roll = value;
+                _newRoll = true;
+            }
+        }
+
+        public async void StartSocketLoop()
+        {
+            await Task.Run(async () =>
+            {
+                bool connected = false;
+
+                while (!connected)
+                {
+                    SendElevation();
+                    SendPich();
+                    SendRoll();
+
+                    if (!connected)
+                        await Task.Delay(500);
+                }
+            });
+        }
+
+        private async void SendElevation()
+        {
+            if (_newElevation)
+            {
+                await _socketService.SendMessage(string.Concat(Constants.ELEVATION_COMMAND, Constants.COMMAND_SEPARATOR, _elevation));
+                _newElevation = false;
+            }
+        }
+
+        private async void SendPich()
+        {
+            if (_newPich)
+            {
+                await _socketService.SendMessage(string.Concat(Constants.PICH_COMMAND, Constants.COMMAND_SEPARATOR, _pich));
+                _newPich = false;
+            }
+        }
+
+        private async void SendRoll()
+        {
+            if (_newRoll)
+            {
+                await _socketService.SendMessage(string.Concat(Constants.ROLL_COMMAND, Constants.COMMAND_SEPARATOR, _elevation));
+                _newRoll = false;
+            }
         }
 
         #endregion

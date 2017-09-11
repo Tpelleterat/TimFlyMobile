@@ -16,6 +16,8 @@ namespace TimFlyMobile
         public static string COMMAND_SEPARATOR = "|";
         public static string STATUS_COMMAND = "STATUS";
         public static string ELEVATION_COMMAND = "ELEVATION";
+        public static string PICH_COMMAND = "PICH";
+        public static string ROLL_COMMAND = "ROLL";
 
 
     }
