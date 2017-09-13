@@ -17,6 +17,12 @@ namespace TimFlyMobile.Managers
         XamarinSocketService _socketService;
         BrainStatusEnum _brainStatusEnum;
 
+        private int _elevation;
+        private int _pitch;
+        private int _roll;
+
+        bool _commandsLoopOk;
+
         #endregion
 
         public GlobalManager()
@@ -42,13 +48,51 @@ namespace TimFlyMobile.Managers
             //return false;
         }
 
-        /// <summary>
-        /// Send socket message with
-        /// </summary>
-        /// <param name="value">New elevation value</param>
+        public void SendCommandsLoop()
+        {
+            Task.Run(async () =>
+            {
+                _commandsLoopOk = true;
+
+                while (_commandsLoopOk)
+                {
+                    SendCommands();
+
+                    await Task.Delay(50);
+                }
+            });
+        }
+
+        private async void SendCommands()
+        {
+            StringBuilder messageBuilder = new StringBuilder();
+            messageBuilder.Append(string.Concat(Constants.ELEVATION_COMMAND, Constants.COMMAND_SEPARATOR, _elevation));
+            messageBuilder.Append(";");
+            messageBuilder.Append(string.Concat(Constants.ROLL_COMMAND, Constants.COMMAND_SEPARATOR, _roll));
+            messageBuilder.Append(";");
+            messageBuilder.Append(string.Concat(Constants.PITCH_COMMAND, Constants.COMMAND_SEPARATOR, _pitch));
+
+            await _socketService.SendMessage(messageBuilder.ToString());
+        }
+
         public void ChangeElevation(int value)
         {
-            _socketService.SendMessage(string.Concat(Constants.ELEVATION_COMMAND, Constants.COMMAND_SEPARATOR, value));
+            _elevation = value;
+        }
+
+        public void ChangePitch(int value)
+        {
+            _pitch = value;
+        }
+
+        public void ChangeRoll(int value)
+        {
+            _roll = value;
+        }
+
+        public async void SendInitialization()
+        {
+            await _socketService.SendMessage(Constants.INITIALIZATION_COMMAND);
         }
 
         #endregion
