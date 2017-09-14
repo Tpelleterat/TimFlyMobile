@@ -15,12 +15,16 @@ namespace MobilePrototype.Services
         StreamWriter _writer;
         public event EventHandler<string> OnMessageReceived;
 
+        public XamarinSocketService()
+        {
+            _client = new TcpSocketClient();
+        }
+
         public async Task<bool> Connect(string adresse, int port)
         {
             bool success = false;
             try
             {
-                _client = new TcpSocketClient();
                 await _client.ConnectAsync(adresse, port);
 
                 _writer = new StreamWriter(_client.WriteStream);

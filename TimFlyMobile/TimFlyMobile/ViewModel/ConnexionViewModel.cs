@@ -132,9 +132,7 @@ namespace TimFlyMobile.ViewModel
             if (success)
             {
                 ConnectionPending = false;
-                Device.BeginInvokeOnMainThread(() => {
-                    App.Current.MainPage = new Pages.Fly();
-                });
+                
             }
         }
 

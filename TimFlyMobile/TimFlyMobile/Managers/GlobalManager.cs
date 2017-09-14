@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TimFlyMobile.Entities;
+using Xamarin.Forms;
 
 namespace TimFlyMobile.Managers
 {
@@ -40,7 +41,7 @@ namespace TimFlyMobile.Managers
 
             if (success)
             {
-                await _socketService.SendMessage(Constants.STATUS_COMMAND);
+                await _socketService.SendMessage(Constants.ASKSTATUS_COMMAND);
             }
             return success;
 
@@ -95,14 +96,49 @@ namespace TimFlyMobile.Managers
             await _socketService.SendMessage(Constants.INITIALIZATION_COMMAND);
         }
 
+        public void ReceiveNewStatus(string status)
+        {
+            BrainStatusEnum NewStatus = (BrainStatusEnum)Enum.Parse(typeof(BrainStatusEnum), status, true);
+
+            if (NewStatus != _brainStatusEnum)
+            {
+                _brainStatusEnum = NewStatus;
+                if (_brainStatusEnum == BrainStatusEnum.Fly && App.Current.MainPage.GetType() != typeof(Pages.Fly))
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        App.Current.MainPage = new Pages.Fly();
+                    });
+                }
+                else if (_brainStatusEnum == BrainStatusEnum.Initialisation)
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        App.Current.MainPage = new Pages.Initialization();
+                    });
+                }
+            }
+        }
+
         #endregion
 
         #region Handlers
 
-        private void OnSocketServiceMessageReceived(object sender, string e)
+        private void OnSocketServiceMessageReceived(object sender, string messageData)
         {
+            List<string> commands = messageData.Split(';')?.ToList();
 
+            foreach (var command in commands)
+            {
+                string data = command.Split('|')?.ToList().Last();
+
+                if (command.Contains(Constants.STATUS_COMMAND))
+                {
+                    ReceiveNewStatus(data);
+                }
+            }
         }
+
 
         #endregion
     }
