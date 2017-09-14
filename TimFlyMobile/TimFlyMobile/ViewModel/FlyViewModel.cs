@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using TimFlyMobile.Managers;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace TimFlyMobile.ViewModel
 {
@@ -23,6 +24,7 @@ namespace TimFlyMobile.ViewModel
         #region Attributes
 
         private readonly IGlobalManager _globalManager;
+        private int _elevationWorker;
 
         #endregion
 
@@ -128,6 +130,18 @@ namespace TimFlyMobile.ViewModel
         }
         private RelayCommand<Point> _rollPitchJoyCommand;
 
+        public RelayCommand InitializationCommand
+        {
+            get
+            {
+                if (_initializationCommand == null)
+                    _initializationCommand = new RelayCommand(Initialization);
+
+                return _initializationCommand;
+            }
+        }
+        private RelayCommand _initializationCommand;
+
         #endregion
 
         /// <summary>
@@ -141,17 +155,53 @@ namespace TimFlyMobile.ViewModel
 
         #region Methods
 
+        private void ElevationLoop()
+        {
+            Task.Run(async () =>
+            {
+                bool elevationLoopOk = true;
+
+                while (elevationLoopOk)
+                {
+                    if (ElevationValue + _elevationWorker < 0)
+                    {
+                        ElevationValue = 0;
+                    }
+                    else
+                    {
+                        ElevationValue += _elevationWorker;
+                    }
+
+                    _globalManager.ChangeElevation(Convert.ToInt32(ElevationValue));
+
+                    await Task.Delay(100);
+                }
+            });
+        }
+
         private void RollPitchJoy(Point point)
         {
             RollValue = Convert.ToInt32(point.X);
             PitchValue = Convert.ToInt32(point.Y);
+
+            _globalManager.ChangeRoll((int)RollValue);
+            _globalManager.ChangePitch((int)PitchValue);
         }
 
         private void ElevationYawJoy(Point point)
         {
-            ElevationValue = Convert.ToInt32(point.Y);
+            _elevationWorker = Convert.ToInt32(point.Y);
+        }
 
-            _globalManager.ChangeElevation((int)ElevationValue);
+        private async void Initialization()
+        {
+            _globalManager.SendInitialization();
+
+            await Task.Delay(2000);
+
+            ElevationLoop();
+
+            _globalManager.SendCommandsLoop();
         }
 
         #endregion

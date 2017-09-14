@@ -18,11 +18,10 @@ namespace TimFlyMobile.Managers
         BrainStatusEnum _brainStatusEnum;
 
         private int _elevation;
-        private bool _newElevation;
-        private int _pich;
-        private bool _newPich;
+        private int _pitch;
         private int _roll;
-        private bool _newRoll;
+
+        bool _commandsLoopOk;
 
         #endregion
 
@@ -42,9 +41,6 @@ namespace TimFlyMobile.Managers
             if (success)
             {
                 await _socketService.SendMessage(Constants.STATUS_COMMAND);
-
-#warning Voir meilleurs solution
-                StartSocketLoop();
             }
             return success;
 
@@ -52,80 +48,51 @@ namespace TimFlyMobile.Managers
             //return false;
         }
 
-        /// <summary>
-        /// Send socket message with
-        /// </summary>
-        /// <param name="value">New elevation value</param>
-        public void ChangeElevation(int value)
+        public void SendCommandsLoop()
         {
-            if (value != _elevation)
+            Task.Run(async () =>
             {
-                _elevation = value;
-                _newElevation = true;
-            }
-        }
+                _commandsLoopOk = true;
 
-        public void ChangePich(int value)
-        {
-            if (value != _pich)
-            {
-                _pich = value;
-                _newPich = true;
-            }
-        }
-
-        public void ChangeRoll(int value)
-        {
-            if (value != _roll)
-            {
-                _roll = value;
-                _newRoll = true;
-            }
-        }
-
-        public async void StartSocketLoop()
-        {
-            await Task.Run(async () =>
-            {
-                bool connected = false;
-
-                while (!connected)
+                while (_commandsLoopOk)
                 {
-                    SendElevation();
-                    SendPich();
-                    SendRoll();
+                    SendCommands();
 
-                    if (!connected)
-                        await Task.Delay(500);
+                    await Task.Delay(50);
                 }
             });
         }
 
-        private async void SendElevation()
+        private async void SendCommands()
         {
-            if (_newElevation)
-            {
-                await _socketService.SendMessage(string.Concat(Constants.ELEVATION_COMMAND, Constants.COMMAND_SEPARATOR, _elevation));
-                _newElevation = false;
-            }
+            StringBuilder messageBuilder = new StringBuilder();
+            messageBuilder.Append(string.Concat(Constants.ELEVATION_COMMAND, Constants.COMMAND_SEPARATOR, _elevation));
+            messageBuilder.Append(";");
+            messageBuilder.Append(string.Concat(Constants.ROLL_COMMAND, Constants.COMMAND_SEPARATOR, _roll));
+            messageBuilder.Append(";");
+            messageBuilder.Append(string.Concat(Constants.PITCH_COMMAND, Constants.COMMAND_SEPARATOR, _pitch));
+
+            await _socketService.SendMessage(messageBuilder.ToString());
         }
 
-        private async void SendPich()
+        public void ChangeElevation(int value)
         {
-            if (_newPich)
-            {
-                await _socketService.SendMessage(string.Concat(Constants.PICH_COMMAND, Constants.COMMAND_SEPARATOR, _pich));
-                _newPich = false;
-            }
+            _elevation = value;
         }
 
-        private async void SendRoll()
+        public void ChangePitch(int value)
         {
-            if (_newRoll)
-            {
-                await _socketService.SendMessage(string.Concat(Constants.ROLL_COMMAND, Constants.COMMAND_SEPARATOR, _elevation));
-                _newRoll = false;
-            }
+            _pitch = value;
+        }
+
+        public void ChangeRoll(int value)
+        {
+            _roll = value;
+        }
+
+        public async void SendInitialization()
+        {
+            await _socketService.SendMessage(Constants.INITIALIZATION_COMMAND);
         }
 
         #endregion
