@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace TimFlyMobile.Pages
 {
-    public partial class Initialization : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class MessagePage : ContentPage
     {
-        public Initialization()
+        public MessagePage()
         {
-            BindingContext = App.Locator.InitializationViewModel;
-
             InitializeComponent();
         }
     }

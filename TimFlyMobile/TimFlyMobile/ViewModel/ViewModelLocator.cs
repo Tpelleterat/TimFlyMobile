@@ -56,6 +56,14 @@ namespace TimFlyMobile.ViewModel
             }
         }
 
+        public InitializationViewModel InitializationViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<InitializationViewModel>();
+            }
+        }
+
         public TestViewModel TestViewModel
         {
             get

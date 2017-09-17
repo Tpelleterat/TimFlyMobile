@@ -110,11 +110,18 @@ namespace TimFlyMobile.Managers
                         App.Current.MainPage = new Pages.Fly();
                     });
                 }
-                else if (_brainStatusEnum == BrainStatusEnum.Initialisation)
+                else if (_brainStatusEnum == BrainStatusEnum.Initialisation && App.Current.MainPage.GetType() != typeof(Pages.Fly))
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         App.Current.MainPage = new Pages.Initialization();
+                    });
+                }
+                else if (_brainStatusEnum == BrainStatusEnum.ControllerNotConnected && App.Current.MainPage.GetType() != typeof(Pages.MessagePage))
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        App.Current.MainPage = new Pages.MessagePage();
                     });
                 }
             }

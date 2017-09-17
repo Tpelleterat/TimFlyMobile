@@ -129,10 +129,9 @@ namespace TimFlyMobile.ViewModel
 #warning int parse exception
             bool success = await _globalManager.Connect(Address, int.Parse(Port));
 
-            if (success)
+            if (!success)
             {
                 ConnectionPending = false;
-                
             }
         }
 
