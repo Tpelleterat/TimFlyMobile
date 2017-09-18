@@ -11,6 +11,12 @@ namespace TimFlyMobile.ViewModel
 
     public class InitializationViewModel : ViewModelBase
     {
+        #region Attributes
+
+        private IGlobalManager _globalManager;
+
+        #endregion
+
         #region Properties
 
         #endregion
@@ -34,9 +40,18 @@ namespace TimFlyMobile.ViewModel
 
         #endregion
 
+        /// <summary>
+        /// Initialise new instance
+        /// </summary>
+        /// <param name="globalManager">Global manager</param>
+        public InitializationViewModel(IGlobalManager globalManager)
+        {
+            _globalManager = globalManager;
+        }
+
         private void SendInitialization()
         {
-
+            _globalManager.SendInitialization();
         }
 
     }
