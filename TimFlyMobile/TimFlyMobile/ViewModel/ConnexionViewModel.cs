@@ -6,19 +6,7 @@ using Xamarin.Forms;
 
 namespace TimFlyMobile.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
-    public class ConnexionViewModel : ViewModelBase
+    public class ConnexionViewModel : ExtendedViewModel
     {
         #region Attributes
 
@@ -133,6 +121,11 @@ namespace TimFlyMobile.ViewModel
             {
                 ConnectionPending = false;
             }
+        }
+
+        protected override void Load()
+        {
+            ConnectionPending = false;
         }
 
         #endregion

@@ -36,6 +36,7 @@ namespace TimFlyMobile.ViewModel
             SimpleIoc.Default.Register<IGlobalManager, GlobalManager>();
 
             SimpleIoc.Default.Register<ConnexionViewModel>();
+            SimpleIoc.Default.Register<InitializationViewModel>();
             SimpleIoc.Default.Register<FlyViewModel>();
             SimpleIoc.Default.Register<TestViewModel>();
         }

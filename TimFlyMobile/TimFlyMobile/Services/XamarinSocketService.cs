@@ -11,9 +11,11 @@ namespace MobilePrototype.Services
 {
     public class XamarinSocketService
     {
+        private bool _isConnected;
         TcpSocketClient _client;
         StreamWriter _writer;
         public event EventHandler<string> OnMessageReceived;
+        public event EventHandler OnServerDisconnected;
 
         public XamarinSocketService()
         {
@@ -22,6 +24,9 @@ namespace MobilePrototype.Services
 
         public async Task<bool> Connect(string adresse, int port)
         {
+            if (_isConnected)
+                return true;
+
             bool success = false;
             try
             {
@@ -30,6 +35,8 @@ namespace MobilePrototype.Services
                 _writer = new StreamWriter(_client.WriteStream);
 
                 Task taskReceive = Task.Run(() => { WaitForData(_client.ReadStream); });
+
+                _isConnected = true;
 
                 success = true;
             }
@@ -58,16 +65,23 @@ namespace MobilePrototype.Services
                 }
                 catch (Exception ex)
                 {
+                    Disconnect();
                     Debug.WriteLine(ex);
                 }
             }
+        }
+
+        private void Disconnect()
+        {
+            _client.DisconnectAsync();
+            OnServerDisconnected?.Invoke(this, new EventArgs());
         }
 
         public async Task SendMessage(string message)
         {
             if (string.IsNullOrEmpty(message))
                 throw new ArgumentException("Le message ne peut pas être vide ou null");
-            
+
             await _writer.WriteLineAsync(message);
             await _writer.FlushAsync();
         }
