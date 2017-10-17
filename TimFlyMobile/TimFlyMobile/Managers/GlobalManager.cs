@@ -30,6 +30,7 @@ namespace TimFlyMobile.Managers
         {
             _socketService = new XamarinSocketService();
             _socketService.OnMessageReceived += OnSocketServiceMessageReceived;
+            _socketService.OnServerDisconnected += OnSocketServiceServerDisconnected;
         }
 
         #region Methods
@@ -146,6 +147,13 @@ namespace TimFlyMobile.Managers
             }
         }
 
+        private void OnSocketServiceServerDisconnected(object sender, EventArgs e)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                App.Current.MainPage = new Pages.Connexion();
+            });
+        }
 
         #endregion
     }

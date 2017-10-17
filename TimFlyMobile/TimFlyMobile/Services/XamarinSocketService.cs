@@ -8,10 +8,11 @@ namespace MobilePrototype.Services
 {
     public class XamarinSocketService
     {
+        private bool _isConnected;
         TcpSocketClient _client;
         StreamWriter _writer;
         public event EventHandler<string> OnMessageReceived;
-        bool _isConnected;
+        public event EventHandler OnServerDisconnected;
 
         public XamarinSocketService()
         {
@@ -20,6 +21,10 @@ namespace MobilePrototype.Services
 
         public async Task<bool> Connect(string adresse, int port)
         {
+            if (_isConnected)
+                return true;
+
+            bool success = false;
             try
             {
                 await _client.ConnectAsync(adresse, port);
@@ -28,9 +33,9 @@ namespace MobilePrototype.Services
 
                 Task taskReceive = Task.Run(() => { WaitForData(_client.ReadStream); });
 
-                //Task taskReccceive = Task.Run(() => { CheckConnexion(_client); });
-
                 _isConnected = true;
+
+                success = true;
             }
             catch (Exception ex)
             {
@@ -84,9 +89,16 @@ namespace MobilePrototype.Services
                 }
                 catch (Exception ex)
                 {
+                    Disconnect();
                     Debug.WriteLine(ex);
                 }
             }
+        }
+
+        private void Disconnect()
+        {
+            _client.DisconnectAsync();
+            OnServerDisconnected?.Invoke(this, new EventArgs());
         }
 
         public async Task SendMessage(string message)

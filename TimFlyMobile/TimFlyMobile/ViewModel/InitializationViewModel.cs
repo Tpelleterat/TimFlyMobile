@@ -9,7 +9,7 @@ using Xamarin.Forms;
 namespace TimFlyMobile.ViewModel
 {
 
-    public class InitializationViewModel : ViewModelBase
+    public class InitializationViewModel : ExtendedViewModel
     {
         #region Attributes
 
@@ -18,6 +18,9 @@ namespace TimFlyMobile.ViewModel
         #endregion
 
         #region Properties
+
+        private IGlobalManager _globalManager;
+        private bool _initPending;
 
         #endregion
 
@@ -31,7 +34,7 @@ namespace TimFlyMobile.ViewModel
             get
             {
                 if (_sendInitializationCommand == null)
-                    _sendInitializationCommand = new RelayCommand(SendInitialization);
+                    _sendInitializationCommand = new RelayCommand(SendInitialization, CanSendInitialization);
 
                 return _sendInitializationCommand;
             }
@@ -52,7 +55,17 @@ namespace TimFlyMobile.ViewModel
         private void SendInitialization()
         {
             _globalManager.SendInitialization();
+            _initPending = true;
         }
 
+        private bool CanSendInitialization()
+        {
+            return !_initPending;
+        }
+
+        protected override void Unload()
+        {
+            _initPending = false;
+        }
     }
 }
