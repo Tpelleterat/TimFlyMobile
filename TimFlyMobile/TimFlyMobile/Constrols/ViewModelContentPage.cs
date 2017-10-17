@@ -19,7 +19,7 @@ namespace TimFlyMobile.Constrols
         {
             base.OnAppearing();
 
-            ExtendedViewModel vm = App.Locator.ConnexionViewModel as ExtendedViewModel;
+            ExtendedViewModel vm = BindingContext as ExtendedViewModel;
             if (vm != null && vm.LoadCommand.CanExecute(null))
                 vm.LoadCommand.Execute(null);
         }
@@ -28,7 +28,7 @@ namespace TimFlyMobile.Constrols
         {
             base.OnDisappearing();
 
-            ExtendedViewModel vm = App.Locator.ConnexionViewModel as ExtendedViewModel;
+            ExtendedViewModel vm = BindingContext as ExtendedViewModel;
             if (vm != null && vm.UnloadCommand.CanExecute(null))
                 vm.UnloadCommand.Execute(null);
         }

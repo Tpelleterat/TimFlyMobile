@@ -1,10 +1,5 @@
-using System;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using TimFlyMobile.Managers;
-using System.Windows.Input;
-using TimFlyMobile.Entities;
-using Xamarin.Forms;
 
 namespace TimFlyMobile.ViewModel
 {
@@ -13,14 +8,14 @@ namespace TimFlyMobile.ViewModel
     {
         #region Attributes
 
-        private IGlobalManager _globalManager;
+        private bool _initPending;
+        private readonly IGlobalManager _globalManager;
 
         #endregion
 
         #region Properties
 
-        private IGlobalManager _globalManager;
-        private bool _initPending;
+        
 
         #endregion
 

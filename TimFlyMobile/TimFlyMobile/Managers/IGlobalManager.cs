@@ -7,7 +7,9 @@ namespace TimFlyMobile.Managers
 
         Task<bool> Connect(string address, int port);
 
-        void SendCommandsLoop();
+        void StartSendCommandsLoop();
+
+        void StopSendCommandsLoop();
 
         void ChangeElevation(int value);
 

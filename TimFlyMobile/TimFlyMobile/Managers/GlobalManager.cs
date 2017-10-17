@@ -37,7 +37,6 @@ namespace TimFlyMobile.Managers
 
         public async Task<bool> Connect(string address, int port)
         {
-#warning debug, code à réactiver
             bool success = await _socketService.Connect(address, port);
 
             if (success)
@@ -45,13 +44,13 @@ namespace TimFlyMobile.Managers
                 await _socketService.SendMessage(Constants.ASKSTATUS_COMMAND);
             }
             return success;
-
-            //await Task.Delay(3000);
-            //return false;
         }
 
-        public void SendCommandsLoop()
+        public void StartSendCommandsLoop()
         {
+            if (_commandsLoopOk)
+                return;
+
             Task.Run(async () =>
             {
                 _commandsLoopOk = true;
@@ -63,6 +62,11 @@ namespace TimFlyMobile.Managers
                     await Task.Delay(50);
                 }
             });
+        }
+
+        public void StopSendCommandsLoop()
+        {
+            _commandsLoopOk = false;
         }
 
         private async void SendCommands()

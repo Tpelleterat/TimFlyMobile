@@ -9,7 +9,7 @@ namespace TimFlyMobile
     public static class Constants
     {
         //Connection page default values
-        public static string DEFAULT_ADDRESS = "172.18.2.126";
+        public static string DEFAULT_ADDRESS = "172.18.2.115";
         public static string DEFAULT_PORT = "1337";
 
         //Sockets commands

@@ -7,24 +7,13 @@ using System.Threading.Tasks;
 
 namespace TimFlyMobile.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
-    public class FlyViewModel : ViewModelBase
+    public class FlyViewModel : ExtendedViewModel
     {
         #region Attributes
 
         private readonly IGlobalManager _globalManager;
         private int _elevationWorker;
+        bool _elevationLoopOk;
 
         #endregion
 
@@ -130,18 +119,6 @@ namespace TimFlyMobile.ViewModel
         }
         private RelayCommand<Point> _rollPitchJoyCommand;
 
-        public RelayCommand InitializationCommand
-        {
-            get
-            {
-                if (_initializationCommand == null)
-                    _initializationCommand = new RelayCommand(Initialization);
-
-                return _initializationCommand;
-            }
-        }
-        private RelayCommand _initializationCommand;
-
         #endregion
 
         /// <summary>
@@ -157,11 +134,14 @@ namespace TimFlyMobile.ViewModel
 
         private void ElevationLoop()
         {
+            if (_elevationLoopOk)
+                return;
+
             Task.Run(async () =>
             {
-                bool elevationLoopOk = true;
+                _elevationLoopOk = true;
 
-                while (elevationLoopOk)
+                while (_elevationLoopOk)
                 {
                     if (ElevationValue + _elevationWorker < 0)
                     {
@@ -193,15 +173,18 @@ namespace TimFlyMobile.ViewModel
             _elevationWorker = Convert.ToInt32(point.Y);
         }
 
-        private async void Initialization()
+        protected override void Load()
         {
-            _globalManager.SendInitialization();
-
-            await Task.Delay(2000);
-
             ElevationLoop();
 
-            _globalManager.SendCommandsLoop();
+            _globalManager.StartSendCommandsLoop();
+        }
+
+        protected override void Unload()
+        {
+            _elevationLoopOk = false;
+
+            _globalManager.StopSendCommandsLoop();
         }
 
         #endregion
