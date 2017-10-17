@@ -119,6 +119,22 @@ namespace TimFlyMobile.ViewModel
         }
         private RelayCommand<Point> _rollPitchJoyCommand;
 
+        /// <summary>
+        /// Get stop command
+        /// </summary>
+        public RelayCommand StopCommand
+        {
+            get
+            {
+                if (_stopCommand == null)
+                    _stopCommand = new RelayCommand(Stop);
+
+                return _stopCommand;
+            }
+        }
+        private RelayCommand _stopCommand;
+
+
         #endregion
 
         /// <summary>
@@ -171,6 +187,12 @@ namespace TimFlyMobile.ViewModel
         private void ElevationYawJoy(Point point)
         {
             _elevationWorker = Convert.ToInt32(point.Y);
+        }
+
+        private void Stop()
+        {
+            _elevationValue = 0;
+            _globalManager.ChangeElevation(0);
         }
 
         protected override void Load()

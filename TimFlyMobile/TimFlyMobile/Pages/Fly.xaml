@@ -76,12 +76,13 @@
         </AbsoluteLayout>
 
 
-        <Button Text="Init"
+        <Button Text="Stop"
+                BackgroundColor="Red"
                 Grid.Row="1"
                 Grid.ColumnSpan="2"
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
-                Command="{Binding InitializationCommand}" />
+                Command="{Binding StopCommand}" />
     </Grid>
 
 </local:ViewModelContentPage>
