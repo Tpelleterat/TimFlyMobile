@@ -1,11 +1,7 @@
 ﻿using Sockets.Plugin;
-using Sockets.Plugin.Abstractions;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MobilePrototype.Services
