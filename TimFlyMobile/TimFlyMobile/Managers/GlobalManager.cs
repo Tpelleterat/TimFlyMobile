@@ -57,7 +57,7 @@ namespace TimFlyMobile.Managers
 
                 while (_commandsLoopOk)
                 {
-                    SendCommands();
+                    await SendCommands();
 
                     await Task.Delay(50);
                 }
@@ -69,7 +69,7 @@ namespace TimFlyMobile.Managers
             _commandsLoopOk = false;
         }
 
-        private async void SendCommands()
+        private async Task SendCommands()
         {
             StringBuilder messageBuilder = new StringBuilder();
             messageBuilder.Append(string.Concat(Constants.ELEVATION_COMMAND, Constants.COMMAND_SEPARATOR, _elevation));
@@ -96,7 +96,7 @@ namespace TimFlyMobile.Managers
             _roll = value;
         }
 
-        public async void SendInitialization()
+        public async Task SendInitialization()
         {
             await _socketService.SendMessage(Constants.INITIALIZATION_COMMAND);
         }
@@ -115,7 +115,7 @@ namespace TimFlyMobile.Managers
                         App.Current.MainPage = new Pages.Fly();
                     });
                 }
-                else if (_brainStatusEnum == BrainStatusEnum.Initialisation && App.Current.MainPage.GetType() != typeof(Pages.Fly))
+                else if (_brainStatusEnum == BrainStatusEnum.Initialization && App.Current.MainPage.GetType() != typeof(Pages.Fly))
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {

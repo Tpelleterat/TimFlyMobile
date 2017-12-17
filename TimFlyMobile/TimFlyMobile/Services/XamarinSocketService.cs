@@ -44,28 +44,6 @@ namespace MobilePrototype.Services
             return _isConnected;
         }
 
-        private async void CheckConnexion(TcpSocketClient test)
-        {
-            while (_isConnected)
-            {
-                try
-                {
-                    var interfaceSocket = await test.GetConnectedInterfaceAsync();
-
-                    if (interfaceSocket.ConnectionStatus == Sockets.Plugin.Abstractions.CommsInterfaceStatus.Disconnected)
-                    {
-                        Disconnection();
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                }
-
-                await Task.Delay(1000);
-            }
-        }
-
         private void Disconnection()
         {
 

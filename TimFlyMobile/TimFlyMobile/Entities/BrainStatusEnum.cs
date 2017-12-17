@@ -10,7 +10,7 @@ namespace TimFlyMobile.Entities
     {
         None,
         ControllerNotConnected,
-        Initialisation,
+        Initialization,
         Fly
     }
 }

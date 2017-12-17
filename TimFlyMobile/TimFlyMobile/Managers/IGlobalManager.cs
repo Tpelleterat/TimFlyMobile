@@ -17,6 +17,6 @@ namespace TimFlyMobile.Managers
 
         void ChangePitch(int value);
 
-        void SendInitialization();
+        Task SendInitialization();
     }
 }

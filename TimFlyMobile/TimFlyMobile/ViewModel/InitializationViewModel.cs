@@ -1,4 +1,5 @@
 using GalaSoft.MvvmLight.Command;
+using System.Threading.Tasks;
 using TimFlyMobile.Managers;
 
 namespace TimFlyMobile.ViewModel
@@ -29,7 +30,7 @@ namespace TimFlyMobile.ViewModel
             get
             {
                 if (_sendInitializationCommand == null)
-                    _sendInitializationCommand = new RelayCommand(SendInitialization, CanSendInitialization);
+                    _sendInitializationCommand = new RelayCommand(async() => await SendInitialization(), CanSendInitialization);
 
                 return _sendInitializationCommand;
             }
@@ -47,9 +48,9 @@ namespace TimFlyMobile.ViewModel
             _globalManager = globalManager;
         }
 
-        private void SendInitialization()
+        private async Task SendInitialization()
         {
-            _globalManager.SendInitialization();
+            await _globalManager.SendInitialization();
             _initPending = true;
         }
 
