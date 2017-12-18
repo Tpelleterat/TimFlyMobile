@@ -24,7 +24,6 @@ namespace MobilePrototype.Services
             if (_isConnected)
                 return true;
 
-            bool success = false;
             try
             {
                 await _client.ConnectAsync(adresse, port);
@@ -35,25 +34,19 @@ namespace MobilePrototype.Services
 
                 _isConnected = true;
 
-                success = true;
             }
             catch (Exception ex)
             {
-                throw ex;
+                Debug.WriteLine(ex);
             }
             return _isConnected;
-        }
-
-        private void Disconnection()
-        {
-
         }
 
         private void WaitForData(Stream inputStream)
         {
             var dr = new StreamReader(inputStream);
 
-            while (true)
+            while (_isConnected)
             {
                 try
                 {
@@ -76,6 +69,7 @@ namespace MobilePrototype.Services
         private void Disconnect()
         {
             _client.DisconnectAsync();
+            _isConnected = false;
             OnServerDisconnected?.Invoke(this, new EventArgs());
         }
 
