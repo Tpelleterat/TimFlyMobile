@@ -59,7 +59,7 @@ namespace TimFlyMobile.Managers
                 {
                     await SendCommands();
 
-                    await Task.Delay(50);
+                    await Task.Delay(Constants.FREQUENCE_SEND_COMMANDS);
                 }
             });
         }

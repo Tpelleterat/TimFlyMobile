@@ -35,7 +35,7 @@
                                      WidthRequest="40"
                                      HeightRequest="40"
                                      BackgroundColor="Blue"
-                                     MaxX="50"
+                                     MaxX="200"
                                      MaxY="5"
                                      Test1="{Binding ElevationYawJoyCommand}" />
         </AbsoluteLayout>
@@ -70,8 +70,8 @@
                                      WidthRequest="40"
                                      HeightRequest="40"
                                      BackgroundColor="Blue"
-                                     MaxX="50"
-                                     MaxY="50"
+                                     MaxX="200"
+                                     MaxY="200"
                                      Test1="{Binding RollPitchJoyCommand}" />
         </AbsoluteLayout>
 

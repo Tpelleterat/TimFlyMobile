@@ -9,17 +9,21 @@ namespace TimFlyMobile
     public static class Constants
     {
         //Connection page default values
-        public static string DEFAULT_ADDRESS = "172.18.2.74";
-        public static string DEFAULT_PORT = "1337";
+        public const string DEFAULT_ADDRESS = "172.18.2.74";
+        public const string DEFAULT_PORT = "1337";
 
         //Sockets commands
-        public static string COMMAND_SEPARATOR = "|";
-        public static string ASKSTATUS_COMMAND = "ASKSTATUS";
-        public static string STATUS_COMMAND = "STATUS";
-        public static string ELEVATION_COMMAND = "ELEVATION";
-        public static string PITCH_COMMAND = "PITCH";
-        public static string ROLL_COMMAND = "ROLL";
-        public static string INITIALIZATION_COMMAND = "INITIALIZATION";
+        public const string COMMAND_SEPARATOR = "|";
+        public const string ASKSTATUS_COMMAND = "ASKSTATUS";
+        public const string STATUS_COMMAND = "STATUS";
+        public const string ELEVATION_COMMAND = "ELEVATION";
+        public const int ELEVATION_COMMAND_MAX_VALUE = 200;
+        public const string PITCH_COMMAND = "PITCH";
+        public const string ROLL_COMMAND = "ROLL";
+        public const string INITIALIZATION_COMMAND = "INITIALIZATION";
 
+        //Miliseconds
+        public const int FREQUENCE_SEND_COMMANDS = 50;
+        public const int FREQUENCE_UPDATE_ELEVATION = 100;
     }
 }

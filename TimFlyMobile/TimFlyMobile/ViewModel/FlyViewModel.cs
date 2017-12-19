@@ -159,18 +159,19 @@ namespace TimFlyMobile.ViewModel
 
                 while (_elevationLoopOk)
                 {
-                    if (ElevationValue + _elevationWorker < 0)
+                    double newValue = ElevationValue + _elevationWorker;
+                    if (newValue < 0)
                     {
                         ElevationValue = 0;
                     }
-                    else
+                    else if (newValue <= Constants.ELEVATION_COMMAND_MAX_VALUE)
                     {
-                        ElevationValue += _elevationWorker;
+                        ElevationValue = newValue;
                     }
 
                     _globalManager.ChangeElevation(Convert.ToInt32(ElevationValue));
 
-                    await Task.Delay(100);
+                    await Task.Delay(Constants.FREQUENCE_UPDATE_ELEVATION);
                 }
             });
         }
